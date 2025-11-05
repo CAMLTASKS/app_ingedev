@@ -1,0 +1,183 @@
+.profile-card {
+  width: 100%;
+  padding: 20px;
+  border-radius: 16px;
+  text-align: center;
+  background: rgba(13, 18, 28, 0.7);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(0,255,163,0.1);
+  box-shadow: 0 0 25px rgba(0,255,163,.15);
+  color: #fff;
+  margin: auto;
+  transition: .3s;
+  animation: fadeUp .6s ease;
+}
+
+.profile-card.editing {
+  box-shadow: 0 0 18px rgba(0,255,163,.5);
+  transform: scale(1.02);
+}
+
+@keyframes fadeUp {
+  0% { opacity: 0; transform: translateY(15px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.avatar-container {
+  position: relative;
+  display: inline-block;
+}
+
+.avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 100px;
+  border: 3px solid #00ff9d;
+  transition: .3s;
+}
+
+.edit-avatar {
+  position: absolute;
+  bottom: 5px;
+  right: 0;
+  background: #00ff9d;
+  font-size: 18px;
+  padding: 6px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: .2s;
+}
+
+.role-badges {
+  margin: 10px 0;
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.role {
+  background: rgba(0,255,163,.2);
+  border: 1px solid #00ff9d;
+  padding: 5px 8px;
+  border-radius: 8px;
+  font-size: 12px;
+}
+
+.info {
+  margin-top: 10px;
+  font-size: 14px;
+  text-align: left;
+}
+
+.mood {
+  color: #00ff9d;
+}
+
+.edit-section input {
+  width: 100%;
+  background: #111;
+  border: 1px solid #2bffbe;
+  margin: 6px 0;
+  padding: 7px;
+  border-radius: 6px;
+  color: white;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 15px;
+}
+
+.btn {
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: .2s;
+}
+
+.edit { background: #008cff; }
+.save { background: #00ff9d; color:#000; }
+.cancel { background: #ff4141; }
+.logout { background: #333; }
+
+
+.dev-master {
+  width: 850px;
+  max-width: 90%;
+  padding: 25px;
+  border-radius: 18px;
+  background: rgba(15, 20, 32, 0.85);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(0, 255, 150, .25);
+  box-shadow: 0 0 35px rgba(0,255,150,.25);
+  margin: auto;
+  color: white;
+  animation: fadeUp .7s ease;
+}
+
+.top-section {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+}
+
+.avatar {
+  width: 130px;
+  height: 130px;
+  border-radius: 100%;
+  border: 3px solid #00ffae;
+  box-shadow: 0 0 15px rgba(0,255,150,.35);
+}
+
+.section { margin-top: 15px; }
+
+.stack, .role-badges, .projects-grid {
+  display: flex; flex-wrap: wrap; gap: 6px;
+}
+
+.stack-item, .role {
+  padding: 4px 8px;
+  border-radius: 6px;
+  background: rgba(0,255,150,.15);
+  border: 1px solid #00ff95;
+  font-size: 12px;
+}
+
+.skill-row { display: flex; align-items:center; gap:10px; margin-bottom: 6px; }
+
+.bar {
+  flex: 1;
+  background: #0b1121;
+  height: 8px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.lvl {
+  height: 100%;
+  background: linear-gradient(90deg,#00ffae,#00e0ff);
+  transition: .5s;
+}
+
+.stats-grid {
+  display: flex; justify-content: space-between; text-align:center;
+}
+
+.project-card {
+  padding: 10px;
+  border:1px solid #00ff8c;
+  border-radius:8px;
+  font-size:12px;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.project-card:hover {
+  transform: scale(1.05);
+  background: rgba(0,255,150,.15);
+}

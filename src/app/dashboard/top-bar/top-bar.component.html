@@ -1,0 +1,177 @@
+<header class="relative z-10 h-16 w-full items-center md:h-20">
+  <div class="relative mx-auto flex h-full flex-col justify-center px-3">
+    <div class="relative flex w-full items-center pl-1 sm:ml-0 sm:pr-2">
+      <div class="container relative left-0 flex w-3/4">
+        <div class="group relative flex h-full w-12 items-center">
+          <button type="button" aria-expanded="false" aria-label="Toggle sidenav"
+            class="text-4xl text-white focus:outline-none lg:hidden" (click)="openSidebar()">
+            &#8801;
+          </button>
+        </div>
+        <!-- Search trigger button -->
+        <div
+          (click)="openSearch()"
+          class="fake-search-pulse group flex items-center gap-2  cursor-pointer rounded-2xl
+                bg-white/10 border border-white/20 backdrop-blur-lg
+                px-4 py-2 transition-all duration-300 hover:bg-white/20 hover:border-white/40
+                hover:shadow-[0_0_30px_rgba(255,255,255,0.15)]">
+
+          <!-- Icon -->
+          <div class="text-white/70 group-hover:text-white text-lg transition">
+            🔍          <span class="text-white/60 group-hover:text-white/90 transition font-light tracking-wide">
+            Buscar ideas, proyectos...
+          </span>
+          </div>
+
+          <!-- Placeholder Text -->
+
+
+          <!-- Glow Dot -->
+          <span class="ml-auto w-2 h-2 rounded-full bg-blue-400 group-hover:bg-blue-300 shadow-lg"></span>
+        </div>
+
+
+        <!-- FULLSCREEN SEARCH OVERLAY -->
+        <div *ngIf="searchOpen"
+          class="fixed inset-0 z-50 flex flex-col items-center justify-start pt-32 bg-black/40 backdrop-blur-3xl animate-fadeIn">
+
+          <!-- Input -->
+          <div class="w-full max-w-2xl">
+            <input [(ngModel)]="query" (input)="filterResults()" placeholder="Busca ideas, proyectos o sueños..."
+              class="w-full text-2xl text-white p-5 rounded-2xl bg-white/5 border border-white/30 shadow-2xl backdrop-blur-xl outline-none focus:ring-2 focus:ring-blue-400 placeholder-white/50 transition">
+          </div>
+
+          <!-- Suggestions -->
+          <div class="mt-6 flex gap-2 text-sm text-white/60">
+            <span class="bg-white/10 px-3 py-1 rounded-full backdrop-blur-md">💡 Ideas</span>
+            <span class="bg-white/10 px-3 py-1 rounded-full backdrop-blur-md">🧠 Proyectos</span>
+            <span class="bg-white/10 px-3 py-1 rounded-full backdrop-blur-md">✨ Inspiración</span>
+          </div>
+
+          <!-- Results -->
+          <div class="mt-8 w-full max-w-2xl space-y-4">
+            <div *ngFor="let item of filtered"
+              class="p-5 rounded-xl bg-white/10 border border-white/20 backdrop-blur-lg hover:bg-white/20 transition cursor-pointer flex items-center gap-3 shadow-xl">
+              <span class="text-2xl">{{ item.icon }}</span>
+              <p class="text-white text-lg">{{ item.name }}</p>
+            </div>
+          </div>
+
+          <!-- Close -->
+          <button (click)="closeSearch()" class="absolute top-6 right-8 text-white text-3xl hover:scale-110 transition">
+            ✖
+          </button>
+        </div>
+
+      </div>
+      <div class="relative ml-5 flex w-9/12 items-center justify-end p-1 sm:right-auto sm:mr-0 md:w-1/4">
+        <!-- Botón ideas -->
+        <a class="block pr-1 text-white" (click)="toggleIdeas()">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
+            <path d="M5.5 16a3.5 3.5 0 01-.369-6.98 4 4 0 117.753-1.977A4.5 4.5 0 1113.5 16h-8z" />
+          </svg>
+        </a>
+
+        <!-- Overlay -->
+        <div class="overlay-ideas" *ngIf="showIdeas" (click)="toggleIdeas()"></div>
+
+        <!-- Modal Ideas -->
+        <div class="ideas-modal" *ngIf="showIdeas">
+          <div class="ideas-header">
+            <h3>💡 Ideas rapidas</h3>
+            <button class="close-btn" (click)="toggleIdeas()">✖</button>
+          </div>
+
+          <!-- Input idea -->
+          <div class="idea-input-box">
+            <textarea [(ngModel)]="newIdea" placeholder="Escribe una idea rápida... 🚀"></textarea>
+
+            <select [(ngModel)]="ideaTag" style="color: green;">
+              <option value="inspiración">✨ Inspiración</option>
+              <option value="tarea">✅ Tarea</option>
+              <option value="prototipo">🧪 Prototipo</option>
+              <option value="prototipo">⚙️ Anotación tener en cuenta</option>
+            </select>
+
+            <button class="add-idea" (click)="addIdea()">Agregar 💭</button>
+          </div>
+
+          <!-- Lista de ideas -->
+          <div class="idea-list">
+            <div (click)="openIdeaChat()" class="idea-item">
+              <span class="tag">✨ Inspiración</span>
+              <p>Ayudate con IA personal 🤖</p>
+              <button class="fav-btn">
+                ⭐
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="idea-chat-overlay" *ngIf="showIdeaChat" (click)="closeIdeaChat()"></div>
+
+        <div class="idea-chat-window" *ngIf="showIdeaChat">
+
+          <div class="chat-header">
+            <h3>💡 INGEDEV AI</h3>
+            <button class="close-btn" (click)="closeIdeaChat()">✖</button>
+          </div>
+
+          <div class="chat-body">
+            <div *ngFor="let c of chat" [ngClass]="c.sender">
+              <div class="bubble">
+                {{ c.text }}
+              </div>
+            </div>
+          </div>
+
+          <div class="chat-input">
+            <input type="text" [(ngModel)]="currentMessage" placeholder="Comparte una idea o pregúntale a tu IA..."
+              (keyup.enter)="sendIdea()" />
+
+            <button class="send-btn" (click)="sendIdea()">➤</button>
+          </div>
+        </div>
+
+        <!-- Botón de notificaciones -->
+        <a class="relative block rounded px-3 py-2 text-white" (click)="toggleNotifications()">
+          <span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
+              <path
+                d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z" />
+            </svg>
+          </span>
+          <span class="absolute right-0 top-0 rounded-full bg-blue-700 px-2 py-0.5 text-xs font-bold">
+            {{ notifications.length }}
+          </span>
+        </a>
+
+        <!-- Modal Notificaciones -->
+        <div class="modal-overlay" *ngIf="showNotifications" (click)="toggleNotifications()"></div>
+
+        <div class="notification-modal" *ngIf="showNotifications">
+          <div class="modal-header">
+            <h3>Notificaciones</h3>
+            <button class="close-btn" (click)="toggleNotifications()">✖</button>
+          </div>
+
+          <div class="notifications-list">
+            <div class="notification-item" *ngFor="let n of notifications">
+              <div class="icon">{{ n.icon }}</div>
+              <div class="text">
+                <strong>{{ n.title }}</strong>
+                <p>{{ n.message }}</p>
+              </div>
+              <span class="time">{{ n.time }}</span>
+            </div>
+          </div>
+        </div>
+
+        <a href="/admin/profile" class="relative block pl-5">
+          <img alt="Dave Glad" src="https://ingedev94.com/assets/imgs/perfil.jpeg"
+            class="mx-auto h-10 w-10 rounded-full object-cover" />
+        </a>
+      </div>
+    </div>
+  </div>
+</header>

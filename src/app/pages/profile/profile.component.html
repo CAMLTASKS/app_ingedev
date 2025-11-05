@@ -1,0 +1,91 @@
+<div class="profile-card dev-master" [class.editing]="isEditing">
+  
+  <!-- Avatar & Basic Info -->
+  <div class="top-section">
+    <div class="avatar-container">
+      <img [src]="user.avatar" alt="avatar" class="avatar" />
+      <label class="edit-avatar" *ngIf="isEditing">
+        📷
+        <input type="file" (change)="uploadAvatar($event)" hidden>
+      </label>
+    </div>
+    <div class="identity">
+      <h2>{{ user.name }}</h2>
+      <p class="email">{{ user.email }}</p>
+      <p class="quote">"Si el mundo se pone dificil confia en Dios y lucha por lo que sueñas lograr."</p>
+    </div>
+  </div>
+
+  <!-- Role badges -->
+  <div class="section">
+    <h3>👑 Perfiles</h3>
+    <div class="role-badges">
+      <span *ngFor="let r of user.roles" class="role">{{ r }}</span>
+    </div>
+  </div>
+
+  <!-- Tech Stack -->
+  <div class="section">
+    <h3>🧠 Tech Stack</h3>
+    <div class="stack">
+      <span *ngFor="let tech of user.stack" class="stack-item">{{ tech }}</span>
+    </div>
+  </div>
+
+  <!-- Skills -->
+  <div class="section">
+    <h3>⚡ Skills</h3>
+
+    <div *ngFor="let s of user.skills" class="skill-row">
+      <span>{{ s.name }}</span>
+      <div class="bar">
+        <div class="lvl" [style.width.%]="s.level"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="section stats">
+    <h3>📊 Estadisticas Programador</h3>
+    <div class="stats-grid">
+      <div><strong>{{ user.stats.projects }}</strong><span> Proyectos</span></div>
+      <div><strong>{{ user.stats.coffee }}</strong><span> Negocios</span></div>
+      <div><strong>{{ user.stats.codeHours }}</strong><span> Horas Código</span></div>
+    </div>
+  </div>
+
+  <!-- Projects Preview -->
+  <div class="section">
+    <h3>🚀 Últimos Proyectos</h3>
+    <div class="projects-grid">
+      <div *ngFor="let p of user.projects" class="project-card">
+        <h4>{{ p.name }}</h4>
+        <span>{{ p.stack }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mood -->
+  <div class="section">
+    <h3>🧠 Mood Dev</h3>
+    <p class="mood-display">{{ user.mood }}</p>
+  </div>
+
+  <!-- Edit section -->
+  <div class="edit-section" *ngIf="isEditing">
+    <input [(ngModel)]="user.name" placeholder="Nombre completo">
+    <input [(ngModel)]="user.email" placeholder="Correo">
+    <input [(ngModel)]="user.country" placeholder="País">
+    <input [(ngModel)]="user.job" placeholder="Profesión / Rol">
+    <input [(ngModel)]="user.mood" placeholder="Estado de ánimo">
+  </div>
+
+  <!-- Buttons -->
+  <div class="actions">
+    <button class="btn edit" *ngIf="!isEditing" (click)="toggleEdit()">✏️ Editar</button>
+    <button class="btn save" *ngIf="isEditing" (click)="saveChanges()">✅ Guardar</button>
+    <button class="btn cancel" *ngIf="isEditing" (click)="toggleEdit()">❌ Cancelar</button>
+    <button class="btn logout" (click)="logout()">🚪 Cerrar Sesión</button>
+  </div>
+
+</div>
